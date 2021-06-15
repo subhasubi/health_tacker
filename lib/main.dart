@@ -1,4 +1,3 @@
-import 'package:firebase/firebase.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:health_tacker/Pages/LoginPage.dart';
@@ -13,7 +12,7 @@ void main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: WelcomePage(),
     ),
   );
 }
