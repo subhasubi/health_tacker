@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
   InputField({
-    this.icon = Icons.visibility_off,
     this.hintText = 'Your Hint',
+    this.icon,
     this.borderRadius = 5.0,
     this.isIcon = false,
     this.isPassword = true,
     this.textFieldWidth,
+    this.controller,
+    this.iconVisible,
   });
   bool? isPassword = false;
   bool? isIcon = true;
-  IconData? icon = Icons.visibility_off;
+  Widget? icon = IconButton(icon: Icon(Icons.visibility_off), onPressed: () {});
   double? borderRadius = 5.0;
   String? hintText;
   double? textFieldWidth = 300;
+  TextEditingController? controller = TextEditingController();
+  VoidCallback? iconVisible;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +28,12 @@ class InputField extends StatelessWidget {
           ? MediaQuery.of(context).size.width
           : textFieldWidth,
       child: TextField(
+          controller: controller,
           obscureText: isPassword!,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: hintText,
-            suffixIcon: isIcon! ? Icon(icon) : SizedBox(),
+            suffixIcon: icon,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius!),
             ),

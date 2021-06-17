@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_tacker/widgets/Button.dart';
 import 'package:health_tacker/widgets/LinkButton.dart';
@@ -13,9 +15,31 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  TextEditingController _username = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
+  signFunction(email, password) async {
+    UserCredential user = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    print('llllllllllllllllll $user');
+  }
+
+  addData() {
+    firestore.collection('User').doc('${_email.text}').set({
+      'username': _username.text,
+      'email': _email.text,
+      'password': _password.text
+    });
+  }
+
+  bool visibilityPassword = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFFDBDBDB),
       body: SafeArea(
         child: Container(
@@ -24,23 +48,38 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Logo(url: 'images/logo.png'),
+                Logo(url: 'images/signup.jpg'),
                 TitleName(
                   title: 'Sign Up Now',
                   subTitle: 'Please fill the Details and Create Account',
                 ),
                 InputField(
+                  controller: _username,
                   isPassword: false,
                   hintText: 'Username',
                 ),
                 InputField(
+                  controller: _email,
                   isPassword: false,
                   hintText: 'Email',
                 ),
                 InputField(
+                  controller: _password,
                   hintText: 'Password',
                   isIcon: true,
-                  icon: Icons.visibility_off,
+                  icon: IconButton(
+                      icon: Icon(Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          visibilityPassword = !visibilityPassword;
+                        });
+                      }),
+                  isPassword: visibilityPassword,
+                  iconVisible: () {
+                    setState(() {
+                      visibilityPassword = !visibilityPassword;
+                    });
+                  },
                 ),
                 CustomButton(
                   child: Text(
@@ -50,7 +89,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 60,
                   width: double.infinity,
                   color: Colors.blueAccent,
-                  onPressed: () {},
+                  onPressed: () {
+                    addData();
+                    signFunction('${_email.text}', '${_password.text}');
+                  },
                 ),
                 LinkButton(
                   normalText: 'Already have an Account? ',
