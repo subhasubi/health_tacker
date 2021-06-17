@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:health_tacker/Pages/GoogleSignIn.dart';
 import 'package:health_tacker/Pages/HomePage.dart';
 import 'package:health_tacker/Pages/LoginPage.dart';
 import 'package:health_tacker/Pages/RegisterPage.dart';
@@ -11,10 +12,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    ),
-  );
+  runApp(MainRun());
+}
+
+class MainRun extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => GoogleSignInProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: RegisterPage(),
+      ),
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -31,6 +32,8 @@ class _HomePageState extends State<HomePage> {
     getData();
   }
 
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +41,12 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Username'),
-            Text('${widget.userEmail}'),
+            Image.network(user.photoURL!),
+            CircleAvatar(
+              backgroundImage: NetworkImage(user.photoURL!),
+            ),
+            Text(user.displayName!),
+            Text('${user.email}'),
             Text('Password'),
             StreamBuilder<QuerySnapshot>(
               stream: firestore.collection("User").snapshots(),

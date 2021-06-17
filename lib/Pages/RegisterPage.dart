@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:health_tacker/Pages/GoogleSignIn.dart';
 import 'package:health_tacker/Pages/HomePage.dart';
 import 'package:health_tacker/widgets/Button.dart';
 import 'package:health_tacker/widgets/LinkButton.dart';
 import 'package:health_tacker/widgets/input_field.dart';
 import 'package:health_tacker/widgets/logo.dart';
 import 'package:health_tacker/widgets/title_and_subtitle.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -47,36 +49,33 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Logo(url: 'images/signup.jpg'),
-                  SizedBox(
-                    height: 40,
+                  Logo(
+                    url: 'images/signup.jpg',
+                    width: double.infinity,
+                    height: 150,
                   ),
+                  SizedBox(height: 25),
                   TitleName(
                     title: 'Sign Up Now',
                     subTitle: 'Please fill the Details and Create Account',
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 30),
                   InputField(
                     controller: _username,
                     isPassword: false,
                     hintText: 'Username',
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 18),
                   InputField(
                     controller: _email,
                     isPassword: false,
                     hintText: 'Email',
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 18),
                   InputField(
                     controller: _password,
                     hintText: 'Password',
@@ -95,9 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                     },
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 30),
                   CustomButton(
                     child: Text(
                       'Sign In',
@@ -115,47 +112,41 @@ class _RegisterPageState extends State<RegisterPage> {
                               )));
                     },
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 30),
                   LinkButton(
                     normalText: 'Already have an Account? ',
                     mainText: 'Log In',
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 15),
                   Text('Or'),
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 15),
                   Container(
-                    width: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width,
                     child: CustomButton(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             'images/g.png',
-                            width: 40,
+                            width: 30,
                           ),
-                          SizedBox(
-                            width: 40,
-                          ),
+                          SizedBox(width: 40),
                           Text(
                             'Sign in',
                             style: TextStyle(fontSize: 22),
                           ),
                         ],
                       ),
-                      height: 50,
+                      height: 45,
                       color: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.googleLogin();
+                      },
                       borderRadius: 5,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
                   ),
                 ],
               ),
