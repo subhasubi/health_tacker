@@ -48,9 +48,18 @@ class _HomePageState extends State<HomePage> {
                   return Text("Lodsjhsdafhku");
                 } else {
                   final message = snapshot.data;
-                  for (final test in snapshot.data!.docs) {}
+                  final lis = [];
+                  for (var j in message!.docs) {
+                    print(j.data());
+                    lis.add(j.data());
+                  }
+                  for (var x = 0; x < lis.length; x++) {
+                    print(lis[x]['username']);
+                    print(lis[x]);
+                    print('ooooooooooooooooooooooooooooooooooooooooooooooooo');
+                  }
 
-                  return Text("having");
+                  return Text('${lis[0]['username']}');
                 }
               },
             )
