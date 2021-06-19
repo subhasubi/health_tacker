@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_tacker/Pages/LoginPage.dart';
 import 'package:health_tacker/widgets/Button.dart';
 import 'package:health_tacker/widgets/LinkButton.dart';
 import 'package:health_tacker/widgets/logo.dart';
@@ -36,11 +37,18 @@ class _WelcomePageState extends State<WelcomePage> {
               color: Colors.blueAccent,
               width: double.infinity,
               height: 50,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => LoginPage()));
+              },
             ),
             LinkButton(
               normalText: 'Already have an Account? ',
               mainText: ' Log In',
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => LoginPage()));
+              },
             )
           ],
         ),

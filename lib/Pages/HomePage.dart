@@ -41,12 +41,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(user.photoURL!),
-            CircleAvatar(
-              backgroundImage: NetworkImage(user.photoURL!),
-            ),
-            Text(user.displayName!),
-            Text('${user.email}'),
             Text('Password'),
             StreamBuilder<QuerySnapshot>(
               stream: firestore.collection("User").snapshots(),
@@ -63,7 +57,8 @@ class _HomePageState extends State<HomePage> {
                   for (var x = 0; x < lis.length; x++) {
                     print(lis[x]['username']);
                     print(lis[x]);
-                    print('ooooooooooooooooooooooooooooooooooooooooooooooooo');
+                    print(
+                        '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                   }
 
                   return Text('${lis[0]['username']}');

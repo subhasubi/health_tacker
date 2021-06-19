@@ -22,7 +22,7 @@ class MainRun extends StatelessWidget {
       create: (context) => GoogleSignInProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: RegisterPage(),
+        home: WelcomePage(),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health_tacker/Pages/GoogleSignIn.dart';
 import 'package:health_tacker/Pages/HomePage.dart';
+import 'package:health_tacker/Pages/LoginPage.dart';
 import 'package:health_tacker/widgets/Button.dart';
 import 'package:health_tacker/widgets/LinkButton.dart';
 import 'package:health_tacker/widgets/input_field.dart';
@@ -23,11 +24,21 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _username = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
+  bool isSignup = true;
 
   signFunction(email, password) async {
-    UserCredential user = await auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    print('llllllllllllllllll $user');
+    try {
+      UserCredential user = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+
+      print('----------------------------------------------------------------');
+    } catch (error) {
+      print(error);
+      print('#############################################################');
+      setState(() {
+        isSignup = true;
+      });
+    }
   }
 
   addData() {
@@ -103,19 +114,25 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 60,
                     width: double.infinity,
                     color: Colors.blueAccent,
-                    onPressed: () {
-                      addData();
-                      signFunction('${_email.text}', '${_password.text}');
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => HomePage(
-                                userEmail: _email.text,
-                              )));
+                    onPressed: () async {
+                      await signFunction('${_email.text}', '${_password.text}');
+                      if (isSignup) {
+                        addData();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => HomePage(
+                                  userEmail: _email.text,
+                                )));
+                      }
                     },
                   ),
                   SizedBox(height: 30),
                   LinkButton(
                     normalText: 'Already have an Account? ',
                     mainText: 'Log In',
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => LoginPage()));
+                    },
                   ),
                   SizedBox(height: 15),
                   Text('Or'),
