@@ -7,6 +7,7 @@ import 'package:health_tacker/Pages/RegisterPage.dart';
 import 'package:health_tacker/Pages/WelcomePage.dart';
 import 'package:health_tacker/Test.dart';
 import 'package:provider/provider.dart';
+import 'package:health_tacker/Pages/Home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

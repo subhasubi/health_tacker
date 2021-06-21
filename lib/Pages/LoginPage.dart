@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:health_tacker/Pages/HomePage.dart';
 import 'package:health_tacker/Pages/RegisterPage.dart';
 import 'package:health_tacker/widgets/Button.dart';
 import 'package:health_tacker/widgets/LinkButton.dart';
@@ -28,7 +29,14 @@ class _LoginPageState extends State<LoginPage> {
     try {
       UserCredential result = await auth.signInWithEmailAndPassword(
           email: email, password: password);
-      print(result);
+      if (result != null) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => HomePage()));
+      } else {
+        print('Invalid User');
+      }
+
+      print("$result resulttttttt");
       print(
           '==========================================================================');
     } catch (error) {
@@ -102,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.blueAccent,
                     onPressed: () {
                       print('${_email.text} , ${_password.text}');
-                      loginFunction(_email.text, _password.text);
+                      loginFunction(_email.text.trim(), _password.text.trim());
                     },
                   ),
                   SizedBox(height: 25),
