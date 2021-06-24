@@ -9,6 +9,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> scaffolaKey = GlobalKey<ScaffoldState>();
+  double rate = 0;
+  double value = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +101,38 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            RotatedBox(
+              quarterTurns: -1,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    image: DecorationImage(
+                      image: AssetImage('images/scale.jpg'),
+                      fit: BoxFit.cover,
+                      alignment: Alignment.centerLeft,
+                    )),
+                height: 100,
+                width: 400,
+                child: Slider(
+                  value: value,
+                  onChanged: (newRate) {
+                    setState(() {
+                      value = newRate;
+                      rate = newRate + 50;
+                      print(rate);
+                    });
+                  },
+                  min: 0,
+                  max: 150,
+                ),
+              ),
+            )
           ],
         ),
       ),
